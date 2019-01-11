@@ -32,7 +32,7 @@ Puppet::Type.type(:razor_hook).provide :rest, :parent => Puppet::Provider::Rest 
     {
       :name          => responseJson['name'],
       :hook_type     => responseJson['hook_type'],
-      :configuration => responseJson['configuration'],
+      :configuration => responseJson['configuration'].dup.delete_if { |k,v| resource['ignored_config_keys'].include? k },
       :ensure        => :present
     }
   end
