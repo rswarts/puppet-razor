@@ -58,8 +58,10 @@ Puppet::Type.type(:razor_hook).provide :rest, :parent => Puppet::Provider::Rest 
     current_state = self.class.get_hook(resource[:name])
     updated = false
 
+    current = current_state[:configuration].dup.delete_if { |k,v| @property_hash[:ignored_config_keys].include? k }
+    expected = @property_hash[:configuration].dup.delete_if { |k,v| @property_hash[:ignored_config_keys].include? k }
     # Configuration
-    if current_state[:configuration] != @property_hash[:configuration]
+    if current != expected
       current = current_state[:configuration]
       expected = @property_hash[:configuration]
 

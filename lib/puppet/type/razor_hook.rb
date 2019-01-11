@@ -17,6 +17,10 @@ Puppet::Type.newtype(:razor_hook) do
     desc "The hook configuration (Hash)"
   end
 
+  newparam(:ignored_config_keys) do
+    desc "Configuration keys to ignore when comparing"
+  end
+
   # This is not support by Puppet (<= 3.7)...
 #  autorequire(:class) do
 #    'razor'
